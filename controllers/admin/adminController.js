@@ -10,6 +10,7 @@ const loadLogin = (req,res)=>{
     if(req.session.admin){
         return res.redirect("/admin/dashboard")
     }
+    console.log("hello");
     
     res.render("admin-login",{message:null})
 
