@@ -87,15 +87,19 @@
         <div class="login-container">
             <h2>Welcome back !!!</h2>
             <h3>Sign in</h3>
-            <form class="login-form">
-                <label for="email" class="input-label">Email</label>
-                <input type="email" id="email" placeholder="test1@gmail.com" >
-                
-                <label for="password" class="input-label">Password</label>
-                <input type="password" id="password" placeholder="••••••••" >
-                
-                <input type="submit" value="SIGN IN →">
-            </form>
+            <!-- ... (previous HTML code) ... -->
+<form action="/admin/login" method="POST" class="login-form">
+    <label for="email" class="input-label">Email</label>
+    <input type="email" id="email" name="email" placeholder="admin@example.com" required>
+    
+    <label for="password" class="input-label">Password</label>
+    <input type="password" id="password" name="password" placeholder="••••••••" required>
+    
+    <input type="submit" value="SIGN IN →">
+</form>
+<!-- ... (rest of the HTML code) ... -->
+
+
             <div class="forgot-password">
                 <a href="#">Forgot Password</a>
             </div>

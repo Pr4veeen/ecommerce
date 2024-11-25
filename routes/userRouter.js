@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/user/userController");
 const passport = require("passport");
+const auth = require("../middlewares/auth")
 
 
-router.get("/",userController.loadHomepage);
+router.get("/",auth.userAuth,userController.loadHomepage);
 router.get("/pageNotFound",userController.pageNotFound)
 
-router.get("/signup",userController.loadSignup)
+router.get("/signup",auth.isLogin,userController.loadSignup)
 router.post("/signup", userController.signup)
 
 router.post("/verify-otp",userController.verifyOtp)
@@ -18,10 +19,10 @@ router.get("/auth/google/callback", passport.authenticate("google",{failureRedir
     res.redirect("/")
 });
 
-router.get("/login",userController.loadLogin)
+router.get("/login",auth.isLogin,userController.loadLogin)
 router.post("/login",userController.login)
 
-router.get("/logout",userController.logout)
+router.get("/logout",auth.userAuth,userController.logout)
 
 
 

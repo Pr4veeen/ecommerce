@@ -4,29 +4,8 @@ const env = require("dotenv").config();
 const bcrypt = require("bcrypt");
 
 
-// const loadHomepage = async(req,res)=>{
-//     try {
-//     const user = req.session.user;
-//     if(user){
-
-//         const userData = await User.findOne({_id:user._id});
-//         res.render("home",{user:userData})
-
-//         console.log("Session User:", req.session.user);
-//         console.log("User Data:", userData);
 
 
-//     }else{
-//         return res.render("home")
-//     }
-        
-//     } catch (error) {
-
-//         console.log("Home page not found", error);
-//         res.status(500).send("Server error")
-        
-//     }
-// }
 const loadHomepage = async (req, res) => {
     try {
         let userData = null;
@@ -253,6 +232,8 @@ const login = async(req,res)=>{
         }
 
         //req.session.user = findUser._id;
+        req.session.user = true
+        
         req.session.user = {
             _id: findUser._id,
             name: findUser.name,
@@ -267,26 +248,22 @@ const login = async(req,res)=>{
     }
 }
 
-const logout = async(req,res)=>{
+const logout = async (req, res) => {
     try {
-
-        req.session.destroy((err)=>{
-
-            if(err){
-                console.log("Session destruction error",err.message);
-                return res.redirect("/pageNotFound");
+        req.session.destroy((err) => {
+            if (err) {
+                console.error("Session destruction error:", err.message);
+                return res.status(500).send("Server error during logout.");
             }
-            return res.redirect("/login")
-
-        })
-        
+            res.clearCookie("connect.sid"); // Clear the session cookie.
+            return res.redirect("/login"); // Redirect to login page.
+        });
     } catch (error) {
-
-        console.log("Logout error",error);
+        console.error("Unexpected error during logout:", error);
         res.redirect("/pageNotFound");
-        
     }
-}
+};
+
 
 module.exports = {
     loadHomepage,
