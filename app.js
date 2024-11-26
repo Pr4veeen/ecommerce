@@ -43,8 +43,6 @@ app.use("/",userRouter)
 app.use("/admin",adminRouter)
 
 
-app.use(nocache());
-
 
 const PORT = 3003 || process.env.PORT
 app.listen(PORT,()=>{
